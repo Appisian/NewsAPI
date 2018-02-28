@@ -20,13 +20,13 @@ export default class HomeScreen extends React.Component {
   }
 
   render() {
-    const { navigate } = this.props.navigation;
+    const { navigate, goBack } = this.props.navigation;
 
     return (
       <View style={styles.mainBackground}>
-        <Header title="LATEST NEWS"></Header>
+        <Header title="LATEST NEWS" navigate={navigate} goBack={goBack} displaySearch={true}></Header>
         <View style={styles.wrapper}>
-          <ArticleList navigate={navigate}></ArticleList> 
+          <ArticleList navigate={navigate} goBack={goBack}></ArticleList> 
         </View>
       </View>
     );
@@ -42,5 +42,6 @@ const styles = StyleSheet.create({
   wrapper: {
     flex: 1,
     paddingHorizontal: 10,
+    overflow: 'visible',
   }
 })

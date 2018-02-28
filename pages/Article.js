@@ -13,9 +13,10 @@ export default class Article extends React.Component {
   }
 
   render() {
+    const { navigate, goBack } = this.props.navigation;
     return (
       <View style={styles.mainBackground}>
-        <Header title={this.props.navigation.state.params.title}></Header>
+        <Header title={this.props.navigation.state.params.title} navigate={navigate} goBack={goBack} displayBack={true}></Header>
       </View>
     );
   }

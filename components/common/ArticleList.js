@@ -47,7 +47,7 @@ export default class ArticleList extends React.Component {
   }
 
   render() {    
-    const {navigate} = this.props;
+    const {navigate, goBack} = this.props;
 
     return (
         <FlatList
@@ -87,6 +87,14 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
     flex: 1,
     marginBottom: 20,
+    borderRadius: 2,
+    shadowColor: '#000000', 
+    shadowOffset: {
+      width: 0,
+      height: 1
+    },
+    shadowRadius: 1,
+    shadowOpacity: .4,
   },
   imageWrapper: {
     height: 126,
