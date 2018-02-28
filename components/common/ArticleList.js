@@ -74,7 +74,7 @@ export default class ArticleList extends React.Component {
             onPress={() =>
               navigate("Article", {
                 title: item.title,
-                link: "ici lien de larticle complet",
+                link: item.url,
               })
             }
           >

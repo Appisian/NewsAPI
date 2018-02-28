@@ -1,6 +1,6 @@
-import React from 'react';
-import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
-import Icon from 'react-native-vector-icons/MaterialIcons';
+import React from "react";
+import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
+import Icon from "react-native-vector-icons/MaterialIcons";
 
 export default class Header extends React.Component {
   constructor(props) {
@@ -8,25 +8,26 @@ export default class Header extends React.Component {
   }
 
   render() {
-    const {title, navigate, goBack, displayBack, displaySearch } = this.props;
-    console.warn(goBack)
+    const { title, navigate, goBack, displayBack, displaySearch } = this.props;
     return (
       <View style={styles.navBar}>
-        <View style={styles.statusBar}></View>
+        <View style={styles.statusBar} />
         <View style={styles.textBarView}>
           <View style={styles.sideNav}>
-          {
-              displayBack ? <TouchableOpacity onPress={() => goBack()}><Icon style={styles.icons} name="arrow-back" size={24} /></TouchableOpacity>: null
-          }
-          </View> 
+            {displayBack ? (
+              <TouchableOpacity onPress={() => goBack()}>
+                <Icon style={styles.icons} name="arrow-back" size={24} />
+              </TouchableOpacity>
+            ) : null}
+          </View>
           <Text style={styles.textBar}>{title}</Text>
           <View style={styles.sideNav}>
-          {
-            displaySearch ? <Icon style={styles.icons} name="search" size={24} />: null
-          }
+            {displaySearch ? (
+              <Icon style={styles.icons} name="search" size={24} />
+            ) : null}
           </View>
         </View>
-        <View style={styles.colorBottomBar}></View>
+        <View style={styles.colorBottomBar} />
       </View>
     );
   }
@@ -35,28 +36,28 @@ export default class Header extends React.Component {
 const styles = StyleSheet.create({
   statusBar: {
     height: 20,
-    backgroundColor: '#fff',
+    backgroundColor: "#fff",
   },
   navBar: {
-    backgroundColor: '#fff',
+    backgroundColor: "#fff",
     elevation: 3,
     height: 80,
   },
   textBarView: {
     flex: 1,
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    flexDirection: 'row',
+    justifyContent: "space-between",
+    alignItems: "center",
+    flexDirection: "row",
   },
   textBar: {
-    color: '#4F4F4F',
-    justifyContent: 'center',
-    alignItems: 'center',
+    color: "#4F4F4F",
+    justifyContent: "center",
+    alignItems: "center",
     fontSize: 12,
-    fontWeight: '700',    
+    fontWeight: "700",
   },
   colorBottomBar: {
-    backgroundColor: '#FC6535',
+    backgroundColor: "#FC6535",
     height: 2,
   },
   sideNav: {
@@ -64,6 +65,6 @@ const styles = StyleSheet.create({
     marginHorizontal: 10,
   },
   icons: {
-    color: '#4F4F4F',
-  }
-})
+    color: "#4F4F4F",
+  },
+});
