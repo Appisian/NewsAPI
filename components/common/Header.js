@@ -5,6 +5,7 @@ import {
   View,
   TouchableOpacity,
   TextInput,
+  Platform,
 } from "react-native";
 import Icon from "react-native-vector-icons/MaterialIcons";
 
@@ -91,13 +92,13 @@ export default class Header extends React.Component {
 
 const styles = StyleSheet.create({
   statusBar: {
-    height: 20,
+    height: Platform.OS === 'ios' ? 20 : 0,
     backgroundColor: "#fff",
   },
   navBar: {
     backgroundColor: "#fff",
     elevation: 3,
-    height: 80,
+    height: Platform.OS === 'ios' ? 80 : 60,
   },
   textBarView: {
     flex: 1,
