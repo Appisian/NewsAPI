@@ -1,23 +1,30 @@
-import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
-import Header from '../components/common/Header';
+import React from "react";
+import { StyleSheet, Text, View, WebView } from "react-native";
+import Header from "../components/common/Header";
 
 export default class Article extends React.Component {
-
   static navigationOptions = {
-    title: 'Article',
-  };  
+    title: "Article",
+  };
 
   constructor(props) {
     super(props);
   }
 
   render() {
-    const { navigate, goBack } = this.props.navigation;
-
+    const { navigate, goBack, state } = this.props.navigation;
     return (
       <View style={styles.mainBackground}>
-        <Header title={this.props.navigation.state.params.title} navigate={navigate} goBack={goBack} displayBack={true} otherBottomBarColor={this.props.navigation.state.params.otherBottomBarColor}></Header>
+        <Header
+          title={state.params.title}
+          navigate={navigate}
+          goBack={goBack}
+          displayBack={true}
+          otherBottomBarColor={
+            state.params.otherBottomBarColor
+          }
+        />
+        <WebView source={{ uri: state.params.link }} />
       </View>
     );
   }
@@ -26,7 +33,7 @@ export default class Article extends React.Component {
 const styles = StyleSheet.create({
   mainBackground: {
     flex: 1,
-    backgroundColor: '#DEDEDE',
-    flexDirection: 'column',
+    backgroundColor: "#DEDEDE",
+    flexDirection: "column",
   },
-})
+});
