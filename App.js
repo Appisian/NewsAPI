@@ -1,13 +1,27 @@
 import React from 'react';
 import { StackNavigator } from 'react-navigation';
-import { StyleSheet, Text, View, TextInput, TouchableOpacity, AppRegistry } from 'react-native';
+import { StyleSheet, Text, View, TextInput, TouchableOpacity, Alert } from 'react-native';
+import firebase from 'firebase';
 
 import HomeScreen from './pages/HomeScreen';
 import Article from './pages/Article';
 import SignIn from './pages/SignIn';
 import SignUp from './pages/SignUp';
+import Search from './pages/Search';
 
 export default class App extends React.Component {
+  
+  componentWillMount() {
+    firebase.initializeApp({
+      apiKey: "AIzaSyD_yG_MbEFKw8vuLg3Tub1VWW_-1KP6YIA",
+      authDomain: "newsapi-7e4db.firebaseapp.com",
+      databaseURL: "https://newsapi-7e4db.firebaseio.com",
+      projectId: "newsapi-7e4db",
+      storageBucket: "newsapi-7e4db.appspot.com",
+      messagingSenderId: "291274045831"
+    });
+  }
+
   render() {
     return (
       <View style={styles.mainBackground}>
@@ -19,8 +33,11 @@ export default class App extends React.Component {
 
 const MyScreens = StackNavigator(
   {
-    Home: { screen: HomeScreen },
+    Home: { screen: SignIn },
+    SignUp: { screen: SignUp },
+    ArticleList: { screen: HomeScreen },
     Article: { screen: Article },
+    Search: {screen: Search},
   },
   {
     navigationOptions: {
@@ -35,49 +52,5 @@ const styles = StyleSheet.create({
     backgroundColor: '#FFF',
     flexDirection: 'column',
     justifyContent: 'flex-end',
-  },
-  fromWrapper: {
-  },
-  form: {
-    paddingHorizontal: 30,
-  },
-  label: {
-    fontSize: 11,
-    color: '#000',
-    fontWeight: '500',
-    marginTop: 24,
-  },
-  input: {
-    lineHeight: 20,
-    borderBottomColor: '#F0F0F0',
-    borderBottomWidth: 1,
-    fontSize: 16,
-    paddingVertical: 11,
-  },
-  signin: {
-    height: 60,
-    backgroundColor: '#FC6535',
-    alignItems: 'center',
-    justifyContent: 'center',
-    borderRadius: 8,
-    marginTop: 128,
-  },
-  textBtn: {
-    color: '#fff',
-    fontSize: 12, 
-    fontWeight: '700',
-  },
-  bottomBar: {
-    backgroundColor: '#FC6535',
-    height: 6,
-  },
-  connecWrapper: {
-    flexDirection: 'row',
-    justifyContent: 'center',
-    marginVertical: 30,
-  },
-  textConnec: {
-    fontSize: 12,
-    fontWeight: '500',
   }
 })

@@ -1,6 +1,6 @@
 import React from 'react';
 import moment from 'moment';
-import { StyleSheet, View, Text, FlatList, Image, TouchableOpacity } from 'react-native';
+import { StyleSheet, View, Text, FlatList, Image, TouchableOpacity, Animated } from 'react-native';
 
 import axios from 'axios';
 
@@ -17,7 +17,8 @@ export default class ArticleList extends React.Component {
 
   async _getData() {
     const { page } = this.state;
-    await axios.get(`https://newsapi.org/v2/everything?sources=google-news&apiKey=025f0aa223a443ce8b1ee55f41bff8a9&pageSize=10&page=${page}`)
+    let req = this.props.req;
+    await axios.get(`${req}`)
     // await axios.get(`https://newsapi.org/v2/top-headlines?sources=google-news&apiKey=025f0aa223a443ce8b1ee55f41bff8a9`)
       .then(response => {
         this.setState({
@@ -33,11 +34,6 @@ export default class ArticleList extends React.Component {
     return ago;
   }
 
-  _onPress = (item) => {
-    console.warn('ma nanouille');
-    // this._getData();
-  }
-
   handleLoadMore = () => {
     this.setState({
       page: this.state.page + 1,
@@ -47,16 +43,17 @@ export default class ArticleList extends React.Component {
   }
 
   render() {    
-    const {navigate, goBack} = this.props;
+    const {navigate, goBack, otherBottomBarColor, noInfinite} = this.props;
 
     return (
         <FlatList
           style={{ paddingVertical: 20 }}
           data={this.state.data}
+          showsVerticalScrollIndicator={false}
           keyExtractor={(item, index) => index.toString()}
           renderItem={({item, index}) => 
           <TouchableOpacity
-            onPress={() => navigate('Article', {title: item.title, link: 'ici lien de larticle complet'})}
+            onPress={() => navigate('Article', {title: item.title, link: 'ici lien de larticle complet', otherBottomBarColor: otherBottomBarColor})}
           >
             <View style={styles.panel}>
               { item.urlToImage ?
@@ -71,7 +68,7 @@ export default class ArticleList extends React.Component {
             </View>
           </TouchableOpacity>
         }
-        onEndReached={this.handleLoadMore}
+        onEndReached={noInfinite ? null : this.handleLoadMore}
         onEndReachedThreshold={1}
         />
     );
