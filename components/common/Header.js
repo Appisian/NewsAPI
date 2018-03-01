@@ -1,15 +1,23 @@
 import React from 'react';
-import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, View, TouchableOpacity, TextInput } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
 export default class Header extends React.Component {
   constructor(props) {
     super(props);
+
+    this.state = {
+      text: '',
+    }
+  }
+
+  _fetchDataSearch = () => {
+    this.props.onSearch(this.state.text);
+    console.warn(this.props.onSearch);
   }
 
   render() {
-    const {title, navigate, goBack, displayBack, displaySearch } = this.props;
-    console.warn(goBack)
+    const {title, navigate, goBack, displayBack, displaySearch, displayInput, otherBottomBarColor, textInput } = this.props;
     return (
       <View style={styles.navBar}>
         <View style={styles.statusBar}></View>
@@ -19,14 +27,16 @@ export default class Header extends React.Component {
               displayBack ? <TouchableOpacity onPress={() => goBack()}><Icon style={styles.icons} name="arrow-back" size={24} /></TouchableOpacity>: null
           }
           </View> 
-          <Text style={styles.textBar}>{title}</Text>
+          {
+            !displayInput ? <Text style={styles.textBar}>{title}</Text>: <TextInput style={styles.textInput} placeholder="SEARCH" placeholderTextColor="#E0E0E0" onSubmitEditing={this._fetchDataSearch} onChangeText={(text) => this.setState({text})} returnKeyType="search" />
+          }
           <View style={styles.sideNav}>
           {
-            displaySearch ? <Icon style={styles.icons} name="search" size={24} />: null
+            displaySearch ? <TouchableOpacity onPress={() => {!otherBottomBarColor ? navigate('Search') : this._fetchDataSearch }}><Icon style={ !otherBottomBarColor ? styles.icons : {color: otherBottomBarColor}} name="search" size={24} /></TouchableOpacity>: null
           }
           </View>
         </View>
-        <View style={styles.colorBottomBar}></View>
+        <View style={!otherBottomBarColor ? styles.colorBottomBar : {backgroundColor: otherBottomBarColor, height: 2}}></View>
       </View>
     );
   }
@@ -65,5 +75,12 @@ const styles = StyleSheet.create({
   },
   icons: {
     color: '#4F4F4F',
-  }
+  },
+  textInput: {
+    fontSize: 12,
+    lineHeight: 14,
+    flex: 1,
+    textAlign: 'center',
+    fontWeight: '700',
+  },
 })
