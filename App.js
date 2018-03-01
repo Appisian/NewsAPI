@@ -33,7 +33,7 @@ export default class App extends React.Component {
 
 const MyScreens = StackNavigator(
   {
-    Home: { screen: HomeScreen },
+    Home: { screen: SignIn },
     SignUp: { screen: SignUp },
     ArticleList: { screen: HomeScreen },
     Article: { screen: Article },
