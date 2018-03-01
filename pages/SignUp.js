@@ -1,12 +1,10 @@
 import React from 'react';
-import { StyleSheet, Text, View, TextInput, TouchableOpacity, Alert } from 'react-native';
+import { StyleSheet, Text, View, TextInput, TouchableOpacity, Alert, AsyncStorage } from 'react-native';
 import firebase from 'firebase';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
 export default class SignUp extends React.Component {
   
-  
-
   static navigationOptions = {
     title: 'Sign Up',
   };  
@@ -17,13 +15,14 @@ export default class SignUp extends React.Component {
   }
 
   _onLoginPress = () => {
-    console.warn('In proccess')
     this.setState({ error: '', loading: true });
 
     const { email, password } = this.state;
     firebase.auth().createUserWithEmailAndPassword(email, password)
       .then(() => {
         this.setState({ error: '', loading: false });
+        this._saveToLocalStore('@LocalStore:email', email);
+        this._saveToLocalStore('@LocalStore:password', password);
         this.props.navigation.navigate('ArticleList');
       })
       .catch((e) => {
@@ -39,6 +38,14 @@ export default class SignUp extends React.Component {
       });
   }
 
+  async _saveToLocalStore(key, value) {
+    try {
+      await AsyncStorage.setItem(key, value);
+    } catch (e) {
+      // error message
+    }
+  }
+
   render() {
     const { navigate, goBack } = this.props.navigation;
 
@@ -47,14 +54,8 @@ export default class SignUp extends React.Component {
         <View style={styles.backWrapper}>
           <TouchableOpacity onPress={() => goBack()}><Icon style={styles.icons} name="arrow-back" size={24} /></TouchableOpacity>
         </View>
-        <View style={styles.fromWrapper}>
+        <View>
           <View style={styles.form}>
-            <Text style={styles.label}>NAME</Text>
-            <TextInput 
-              style={styles.input} 
-              placeholder="Stephen Smith" 
-              placeholderTextColor="#000"
-            ></TextInput>
             <Text style={styles.label}>EMAIL</Text>
             <TextInput 
               style={styles.input} 
@@ -78,7 +79,7 @@ export default class SignUp extends React.Component {
               </View>
             </TouchableOpacity>
 
-            <TouchableOpacity>
+            <TouchableOpacity onPress={() => goBack()}>
               <View style={styles.connecWrapper}>
                 <Text style={styles.textConnec}>Already have an account ?</Text>
                 <Text style={[styles.textConnec, {fontWeight: '700'}]}> Sign in</Text>
@@ -99,8 +100,6 @@ const styles = StyleSheet.create({
     backgroundColor: '#FFF',
     flexDirection: 'column',
     justifyContent: 'flex-end',
-  },
-  fromWrapper: {
   },
   form: {
     paddingHorizontal: 30,
@@ -124,7 +123,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     borderRadius: 8,
-    marginTop: 88,
+    marginTop: 128,
   },
   textBtn: {
     color: '#fff',

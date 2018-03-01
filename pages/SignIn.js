@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, View, TextInput, TouchableOpacity, Alert } from 'react-native';
+import { StyleSheet, Text, View, TextInput, TouchableOpacity, Alert, AsyncStorage } from 'react-native';
 import firebase from 'firebase';
 
 // import Spinner from './components/common/Spinner';
@@ -21,6 +21,10 @@ export default class SignIn extends React.Component {
     }
   }
 
+  componentWillMount() {
+    this._fetchFromLocalStore();
+  }
+
   _onLoginPress = () => {
     this.setState({ error: '', loading: true });
 
@@ -28,6 +32,8 @@ export default class SignIn extends React.Component {
     firebase.auth().signInWithEmailAndPassword(email, password)
       .then(() => {
         this.setState({ error: '', loading: false });
+        this._saveToLocalStore('@LocalStore:email', email);
+        this._saveToLocalStore('@LocalStore:password', password);
         this.props.navigation.navigate('ArticleList')
       })
       .catch((e) => {
@@ -43,11 +49,25 @@ export default class SignIn extends React.Component {
       })
   }
 
-  _renderButtonOrSpinner = () => {
-    if(this.state.loading) {
-      // return <Spinner />
+  async _fetchFromLocalStore() {
+    try{
+      let email = await AsyncStorage.getItem('@LocalStore:email');
+      let password = await AsyncStorage.getItem('@LocalStore:password');
+      if (email !== null && password !== null){
+        this.props.navigation.navigate('ArticleList');
+      }
     }
-    return <Button onPress={this._onLoginPress.bind(this)} title="Log in" />
+    catch(e){
+      // error
+    }
+  }
+  
+  async _saveToLocalStore(key, value) {
+    try {
+      await AsyncStorage.setItem(key, value);
+    } catch (e) {
+      // error
+    }
   }
 
   render() {
@@ -55,13 +75,13 @@ export default class SignIn extends React.Component {
 
     return (
       <View style={styles.mainBackground}>
-        <View style={styles.fromWrapper}>
+        <View>
           <View style={styles.form}>
             <Text style={styles.label}>EMAIL</Text>
             <TextInput 
               style={styles.input} 
               keyboardType={"email-address"}
-              placeholder="stephen.smith@gmail.com" 
+              placeholder={"stephen.smith@gmail.com" }
               placeholderTextColor="#000"
               onChangeText={email => this.setState({ email })}
             />
@@ -105,8 +125,6 @@ const styles = StyleSheet.create({
     backgroundColor: '#FFF',
     flexDirection: 'column',
     justifyContent: 'flex-end',
-  },
-  fromWrapper: {
   },
   form: {
     paddingHorizontal: 30,
