@@ -91,6 +91,9 @@ export default class ArticleList extends React.Component {
                 <Text numberOfLines={2} style={styles.articleDescription}>
                   {item.description}
                 </Text>
+                <Text style={styles.articleDateTime}>
+                  {this._timeFromNow(item.publishedAt)}
+                </Text>
               </View>
             </View>
           </TouchableOpacity>
