@@ -43,8 +43,7 @@ export default class ArticleList extends React.Component {
   }
 
   render() {    
-    const {navigate, goBack, otherBottomBarColor} = this.props;
-    console.warn('ArticleList' + otherBottomBarColor);
+    const {navigate, goBack, otherBottomBarColor, noInfinite} = this.props;
 
     return (
         <FlatList
@@ -69,7 +68,7 @@ export default class ArticleList extends React.Component {
             </View>
           </TouchableOpacity>
         }
-        onEndReached={this.handleLoadMore}
+        onEndReached={noInfinite ? null : this.handleLoadMore}
         onEndReachedThreshold={1}
         />
     );

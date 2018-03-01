@@ -59,7 +59,7 @@ class TopHeadlines extends React.Component {
       <View style={styles.mainBackground}>
         <Header title="TOP HEADLINES" navigate={navigate} goBack={goBack} displaySearch={true}></Header>
         <View style={styles.wrapper}>
-          <ArticleList navigate={navigate} goBack={goBack} req={"https://newsapi.org/v2/top-headlines?country=us&apiKey=025f0aa223a443ce8b1ee55f41bff8a9"}></ArticleList> 
+          <ArticleList navigate={navigate} goBack={goBack} req={"https://newsapi.org/v2/top-headlines?country=us&apiKey=025f0aa223a443ce8b1ee55f41bff8a9"} noInfinite={true}></ArticleList> 
         </View>
       </View>
     );
