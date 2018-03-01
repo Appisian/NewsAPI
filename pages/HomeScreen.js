@@ -98,6 +98,11 @@ export default TabNavigator({
   tabBarOptions: {
     activeTintColor: '#FC6535',
     inactiveTintColor: 'gray',
+    style: {
+      backgroundColor: 'white',
+      borderTopColor: '#FC6535',
+      borderTopWidth: 1,
+    }
   },
   tabBarComponent: TabBarBottom,
   tabBarPosition: 'bottom',
