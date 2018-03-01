@@ -34,10 +34,10 @@ export default class Search extends React.Component {
     const { navigate, goBack } = this.props.navigation;
     const textInput = this.state.text;
     
-    if(this.state.text && this.state.text.length > 4) {
+    if(this.state.text && this.state.text.length > 0) {
       let req = `https://newsapi.org/v2/everything?q=${textInput}&apiKey=025f0aa223a443ce8b1ee55f41bff8a9`;
       return <View style={styles.wrapper}>
-              <ArticleList navigate={navigate} goBack={goBack} req={req} key={textInput} otherBottomBarColor="#35D8FC"></ArticleList> 
+              <ArticleList navigate={navigate} goBack={goBack} req={req} key={textInput} otherBottomBarColor="#35D8FC" noInfinite={true}></ArticleList> 
             </View>
     }
     return <View style={styles.searchIndication}>
@@ -79,6 +79,7 @@ const styles = StyleSheet.create({
   },
   wrapper: {
     paddingHorizontal: 10,
+    flex: 1,
   },
   textIndication: {
     color: '#BDBDBD', 
