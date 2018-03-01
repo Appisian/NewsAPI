@@ -13,7 +13,6 @@ export default class Header extends React.Component {
 
   _fetchDataSearch = () => {
     this.props.onSearch(this.state.text);
-    console.warn(this.props.onSearch);
   }
 
   render() {

@@ -35,7 +35,6 @@ export default class Search extends React.Component {
     const textInput = this.state.text;
     
     if(this.state.text && this.state.text.length > 4) {
-      console.warn(textInput)
       let req = `https://newsapi.org/v2/everything?q=${textInput}&apiKey=025f0aa223a443ce8b1ee55f41bff8a9`;
       return <View style={styles.wrapper}>
               <ArticleList navigate={navigate} goBack={goBack} req={req} key={textInput} otherBottomBarColor="#35D8FC"></ArticleList> 
